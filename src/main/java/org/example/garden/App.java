@@ -48,9 +48,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.example.garden.Garden;
-import org.example.garden.GardenDatabase;
-
 import java.io.*;
 import java.util.*;
 
@@ -199,24 +196,7 @@ public class App extends Application {
         // Handle GROW command to grow plants by a specified amount
         else if (line[0].equalsIgnoreCase("GROW")) {
             // Extract the growth amount from the command
-            int num = Integer.parseInt(line[1]);
-
-            if (line.length == 2) {
-                // Grow all plants by the specified amount
-                garden.growAll(num);
-            } else if (line[2].matches("\\(\\d+,\\d+\\)")) { // Check for coordinate format
-                // Extract row and column from the coordinate format
-                int row = Integer.parseInt(String.valueOf(line[2].charAt(1)));
-                int col = Integer.parseInt(String.valueOf(line[2].charAt(3)));
-                // Grow the plant at the specified position
-                garden.growAtPosition(num, row, col);
-            } else if (line[2].equalsIgnoreCase("flower") || line[2].equalsIgnoreCase("tree") || line[2].equalsIgnoreCase("fruit") || line[2].equalsIgnoreCase("vegetable")) {
-                // Grow all plants of a specific class (e.g., "flower")
-                garden.growByClass(num, line[2]);
-            } else {
-                // Grow plants of a specific type
-                garden.growByType(num, line[2]);
-            }
+            processGrowCommand(line);
         }
         // Handle REMOVE commands (HARVEST, PICK, CUT, RIPE) to remove plants from the garden
         else if (line[0].equalsIgnoreCase("HARVEST") || line[0].equalsIgnoreCase("CUT") || line[0].equalsIgnoreCase("PICK") || line[0].equalsIgnoreCase("RIPE")) {
@@ -237,6 +217,29 @@ public class App extends Application {
 
         // Append the executed command to the TextArea for logging
         command.appendText(lineString + "\n");
+    }
+
+
+    // Handle GROW command to grow plants by a specified amount
+    private void processGrowCommand(String[] line) {
+        int num = Integer.parseInt(line[1]);
+
+        if (line.length == 2) {
+            // Grow all plants by the specified amount
+            garden.growAll(num);
+        } else if (line[2].matches("\\(\\d+,\\d+\\)")) { // Check for coordinate format
+            // Extract row and column from the coordinate format
+            int row = Integer.parseInt(String.valueOf(line[2].charAt(1)));
+            int col = Integer.parseInt(String.valueOf(line[2].charAt(3)));
+            // Grow the plant at the specified position
+            garden.growAtPosition(num, row, col);
+        } else if (line[2].equalsIgnoreCase("flower") || line[2].equalsIgnoreCase("tree") || line[2].equalsIgnoreCase("fruit") || line[2].equalsIgnoreCase("vegetable")) {
+            // Grow all plants of a specific class (e.g., "flower")
+            garden.growByClass(num, line[2]);
+        } else {
+            // Grow plants of a specific type
+            garden.growByType(num, line[2]);
+        }
     }
 
     /**
