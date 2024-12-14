@@ -94,6 +94,7 @@ public class App extends Application {
         File file = new File(fileName);
         Scanner myReader = new Scanner(file);
 
+        // Process the garden configuration and commands from the input file
         while (myReader.hasNext()) {
             String lineString = myReader.nextLine();
             String[] line = lineString.split(" ");
@@ -109,13 +110,13 @@ public class App extends Application {
             } else if (line[0].equalsIgnoreCase("delay:")) {
                 App.setDelay(Double.valueOf(line[1])); // Update delay time between commands
             } else {
-                // Add other commands to the command queue
+                // Add other commands to the command queue for processing
                 commandQueue.add(lineString);
             }
         }
         myReader.close();
 
-        // Launch the JavaFX application
+        // Launch the JavaFX application to display the garden simulation
         launch(args);
     }
 
@@ -187,7 +188,7 @@ public class App extends Application {
         // Split the input command string into parts
         String[] line = lineString.split(" ");
 
-        // Handle PLANT command
+        // Handle PLANT command to add a new plant to the garden at specified coordinates
         if (line[0].equalsIgnoreCase("plant")) {
             // Extract row and column from the coordinate format (e.g., "(1,2)")
             int row = Integer.parseInt(String.valueOf(line[1].charAt(1)));
@@ -195,7 +196,7 @@ public class App extends Application {
             // Call the method to plant in the garden at the specified location
             garden.plantGarden(row, col, line[2]);
         }
-        // Handle GROW command
+        // Handle GROW command to grow plants by a specified amount
         else if (line[0].equalsIgnoreCase("GROW")) {
             // Extract the growth amount from the command
             int num = Integer.parseInt(line[1]);
@@ -217,7 +218,7 @@ public class App extends Application {
                 garden.growByType(num, line[2]);
             }
         }
-        // Handle REMOVE commands (HARVEST, PICK, CUT, RIPE)
+        // Handle REMOVE commands (HARVEST, PICK, CUT, RIPE) to remove plants from the garden
         else if (line[0].equalsIgnoreCase("HARVEST") || line[0].equalsIgnoreCase("CUT") || line[0].equalsIgnoreCase("PICK") || line[0].equalsIgnoreCase("RIPE")) {
             if (line.length == 1) {
                 // Remove all plants of the specified type
@@ -277,56 +278,50 @@ public class App extends Application {
      * @return GraphicsContext for the canvas, used for rendering.
      */
     public GraphicsContext setupStage(Stage primaryStage, TextArea command) {
-        // Create a BorderPane to contain the canvas and TextArea
-        BorderPane p = new BorderPane();
-        // Create a StackPane to wrap the BorderPane with padding
+        // StackPane for managing layout
         StackPane root = new StackPane();
-        root.setPadding(new Insets(5));
-        root.getChildren().add(p);
+        BorderPane layout = new BorderPane();
+        layout.setCenter(root);
+        layout.setBottom(command);
+        BorderPane.setMargin(command, new Insets(TEXT_SIZE, 10, 10, 10));
 
-        // Set the scene with the StackPane, including canvas dimensions and additional padding
-        Scene scene = new Scene(root, SIZE_ACROSS + 10, SIZE_DOWN + TEXT_SIZE + 10);
-
-        // Create a canvas for drawing the garden visualization
+        // Initialize the canvas for drawing the garden
         Canvas canvas = new Canvas(SIZE_ACROSS, SIZE_DOWN);
+        root.getChildren().add(canvas);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        // Configure the command TextArea to display executed commands
-        command.setPrefHeight(TEXT_SIZE);
-        command.setEditable(false);
-
-        // Add the canvas and TextArea to the BorderPane layout
-        p.setCenter(canvas);
-        p.setBottom(command);
-
-        // Set the stage title and associate it with the scene
-        primaryStage.setTitle("Garden");
+        // Set up the scene and the primary stage
+        Scene scene = new Scene(layout, SIZE_ACROSS, SIZE_DOWN);
+        primaryStage.setTitle("Garden Management Simulation");
         primaryStage.setScene(scene);
 
-        // Return the GraphicsContext of the canvas for rendering
-        return canvas.getGraphicsContext2D();
+        return gc;
     }
 
     /**
-     * Sets the delay for animation or processing.
-     * @param delay The delay in seconds.
+     * Sets the delay time for executing commands in the simulation.
+     *
+     * @param delayTime The delay time in seconds.
      */
-    public static void setDelay(double delay) {
-        App.delay = delay;
+    public static void setDelay(double delayTime) {
+        delay = delayTime;
     }
 
     /**
-     * Configures the width of the canvas based on the number of columns in the garden.
-     * @param colNum The number of columns.
+     * Sets the size of the garden grid's width (across).
+     *
+     * @param size The width in units.
      */
-    public static void setSizeAcross(int colNum) {
-        SIZE_ACROSS = colNum * 5 * (RECT_SIZE_Plant + 10);
+    public static void setSizeAcross(int size) {
+        SIZE_ACROSS = size * 20;
     }
 
     /**
-     * Configures the height of the canvas based on the number of rows in the garden.
-     * @param rowNum The number of rows.
+     * Sets the size of the garden grid's height (down).
+     *
+     * @param size The height in units.
      */
-    public static void setSizeDown(int rowNum) {
-        SIZE_DOWN = rowNum * 5 * (RECT_SIZE_Plant + 10);
+    public static void setSizeDown(int size) {
+        SIZE_DOWN = size * 20;
     }
 }
