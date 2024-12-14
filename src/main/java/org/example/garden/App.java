@@ -246,7 +246,7 @@ public class App extends Application {
      */
     private void gardenDraw(GraphicsContext gc) {
         // Retrieves the garden's color array, where each cell contains the color corresponding to the plant or empty land
-        Color arr[][] = garden.PrintGarden();
+        Color arr[][] = garden.createGarden();
 
         // Clears the canvas to prepare for redrawing the garden
         gc.clearRect(0, 0, SIZE_ACROSS, SIZE_DOWN);

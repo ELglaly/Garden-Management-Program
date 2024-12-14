@@ -45,6 +45,17 @@ public class Vegetable extends Plant {
 		}
 	}
 
+	@Override
+	public void draw(int row, int col, int rate, Color[][] arr) {
+		int startRow = row * 5;
+		int startCol = col * 5;
+		for (int i = 0; i < rate; i++) {
+			if (startRow + i < arr.length) {
+				arr[startRow + i][startCol + 2] = Color.GREEN; // Plant grows downwards in the middle
+			}
+		}
+	}
+
 	// Override the toString() method for better representation of Vegetable object
 	@Override
 	public String toString() {

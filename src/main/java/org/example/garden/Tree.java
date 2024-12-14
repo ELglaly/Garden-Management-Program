@@ -71,6 +71,21 @@ public class Tree extends Plant {
 			System.out.println("The tree cannot grow because it has been cut.");
 		}
 	}
+
+	@Override
+	public void draw(int row, int col, int rate, Color[][] arr) {
+		int startRow = row * 5;
+		int startCol = col * 5;
+			for (int i = startRow + 4; i >= startRow; i--) {
+				for (int j = startCol; j < startCol + 5; j++) {
+					if (j == startCol + 2 && rate > 0) {
+						arr[i][j] = Color.BLACK;
+						rate--;
+					}
+				}
+			}
+	}
+
 	// Override the toString() method to provide a string representation of the tree's state
 	@Override
 	public String toString() {

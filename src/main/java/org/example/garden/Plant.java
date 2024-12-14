@@ -44,6 +44,7 @@ public abstract class Plant {
 
 	// Abstract method for growing the plant (to be implemented by subclasses)
 	public abstract void grow();
+	public abstract void draw(int row, int col, int rate, Color arr[][]);
 
 	// Getter methods (Encapsulation)
 	public PlantType getType() {
@@ -187,7 +188,7 @@ public abstract class Plant {
 	}
 
 	// Helper method to get the plant type based on the verb (e.g., "harvest" -> Vegetable)
-	private static Plant.PlantType getClassNameByVerb(String verb) {
+	public static Plant.PlantType getClassNameByVerb(String verb) {
 		if (verb.equalsIgnoreCase("harvest")) {
 			return PlantType.VEGETABLE;
 		} else if (verb.equalsIgnoreCase("pick")) {
@@ -199,4 +200,5 @@ public abstract class Plant {
 		}
 		return null;
 	}
+
 }

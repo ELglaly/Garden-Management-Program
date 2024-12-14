@@ -60,6 +60,17 @@ public class Fruit extends Plant {
 		}
 	}
 
+	@Override
+	public void draw(int row, int col, int rate, Color[][] arr) {
+		int startRow = row * 5;
+		int startCol = col * 5;
+		for (int i = 0; i < rate; i++) {
+			if (startRow + 4 - i < arr.length) {
+				arr[startRow + 4 - i][startCol + 2] = Color.ORANGE; // Plant grows downwards in the middle
+			}
+		}
+	}
+
 	// Override the toString() method for better representation of the Fruit object
 	@Override
 	public String toString() {
