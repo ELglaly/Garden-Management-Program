@@ -64,8 +64,6 @@ public class Functions {
 					}
 				}
 
-
-
 			} else if (rate >= 5) {
 				for (int i = startRow; i < startRow + 5; i++) {
 					for (int j = startCol; j < startCol + 5; j++) {
@@ -144,13 +142,13 @@ public class Functions {
 		else {
 
 			String className = "";
-			if (RunGarden.vegetables.contains(typeOrClass)) {
+			if (GardenDatabase.getVegetables().contains(typeOrClass)) {
 				className = "Vegetable";
-			} else if (RunGarden.fruits.contains(typeOrClass)) {
+			} else if (GardenDatabase.getFruits().contains(typeOrClass)) {
 				className = "Fruit";
-			} else if (RunGarden.flowers.contains(typeOrClass)) {
+			} else if (GardenDatabase.getFlowers().contains(typeOrClass)) {
 				className = "Flower";
-			} else if (RunGarden.trees.contains(typeOrClass)) {
+			} else if (GardenDatabase.getTrees().contains(typeOrClass)) {
 				className = "Tree";
 			}
 
@@ -158,24 +156,18 @@ public class Functions {
 				for (int j = 0; j < cols; j++) {
 					if (land[i][j] == null)
 						continue;
-					if (land[i][j].getType().equalsIgnoreCase(typeOrClass)) {
-
-						if (className.equalsIgnoreCase("tree")) {
+					Plant.PlantType type=Plant.PlantType.getName(className);
+						if (type== Plant.PlantType.TREE) {
 							((Tree) land[i][j]).cut();
-
-						} else if (className.equalsIgnoreCase("flower")) {
+						} else if (type == Plant.PlantType.FLOWER) {
 							((Flower) land[i][j]).pick();
-
-						} else if (className.equalsIgnoreCase("fruit")) {
+						} else if (type== Plant.PlantType.FRUIT) {
 							((Fruit) land[i][j]).ripe();
-
-						} else if (className.equalsIgnoreCase("vegetable")) {
+						} else if (type== Plant.PlantType.VEGETABLE) {
 							((Vegetable) land[i][j]).harvest();
-
 						}
 						land[i][j] = null;
 
-					}
 				}
 			}
 

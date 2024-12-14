@@ -3,67 +3,86 @@ package org.example.garden;
 import javafx.scene.paint.Color;
 
 public class Tree extends Plant {
-	
-	    private double height;
-	    private boolean isFruited;
-	    private boolean isCut;
-	    
 
-		public Tree(String type, int age, Color color, int growthRate, Health health, double height, boolean isFruited,
-                    boolean isCut) {
-			super(type, age, color, growthRate, health);
-			this.height = height;
-			this.isFruited = isFruited;
-			this.isCut = isCut;
-		}
+	private double height;
+	private boolean isFruited;
+	private boolean isCut;
 
-		/**
-		 * @return the height
-		 */
-		public double getHeight() {
-			return height;
-		}
+	// Constructor to initialize Tree properties
+	public Tree(String name, int age, Color color, int growthRate, Health health, double height, boolean isFruited, boolean isCut) {
+		super(PlantType.TREE,name, age, color, growthRate, health);
+		this.height = height;
+		this.isFruited = isFruited;
+		this.isCut = isCut;
+	}
 
-		/**
-		 * @return the isFruited
-		 */
-		public boolean isFruited() {
-			return isFruited;
-		}
+	// Getter for height
+	public double getHeight() {
+		return height;
+	}
 
-		/**
-		 * @return the isCut
-		 */
-		public boolean isCut() {
-			return isCut;
-		}
+	// Getter for isFruited
+	public boolean isFruited() {
+		return isFruited;
+	}
 
-		/**
-		 * @param height the height to set
-		 */
-		public void setHeight(double height) {
-			this.height = height;
-		}
+	// Getter for isCut
+	public boolean isCut() {
+		return isCut;
+	}
 
-		/**
-		 * @param isFruited the isFruited to set
-		 */
-		public void setFruited(boolean isFruited) {
-			this.isFruited = isFruited;
+	// Setter for height with validation
+	public void setHeight(double height) {
+		if (height <= 0) {
+			throw new IllegalArgumentException("Height must be greater than 0");
 		}
+		this.height = height;
+	}
 
-		/**
-		 * @param isCut the isCut to set
-		 */
-		public void setCut(boolean isCut) {
-			this.isCut = isCut;
-		}
+	// Setter for isFruited
+	public void setFruited(boolean isFruited) {
+		this.isFruited = isFruited;
+	}
 
-		
-		public void cut()
-		{
-			this.setCut(true);
-			this.setGrowthRate(0);
-			
+	// Setter for isCut
+	public void setCut(boolean isCut) {
+		this.isCut = isCut;
+	}
+
+	// Method to simulate cutting the tree
+	public void cut() {
+		if (this.isCut) {
+			System.out.println("The tree has already been cut.");
+			return;
 		}
+		this.setCut(true);
+		this.setGrowthRate(0); // Stop growth after cutting
+		System.out.println("The tree has been cut and will no longer grow.");
+	}
+
+	// Override the grow() method for tree-specific growth behavior
+	@Override
+	public void grow() {
+		if (!isCut) {
+			// Simulate tree growth behavior (e.g., increase height, grow fruit)
+			System.out.println("The tree is growing!");
+			this.height += 1;  // Example: increase height by 1 unit each time it grows
+		} else {
+			System.out.println("The tree cannot grow because it has been cut.");
+		}
+	}
+	// Override the toString() method to provide a string representation of the tree's state
+	@Override
+	public String toString() {
+		return "Tree{" +
+				"type='" + getType() + '\'' +
+				", age=" + getAge() +
+				", color=" + getColor() +
+				", growthRate=" + getGrowthRate() +
+				", health=" + getHealth() +
+				", height=" + height +
+				", isFruited=" + isFruited +
+				", isCut=" + isCut +
+				'}';
+	}
 }

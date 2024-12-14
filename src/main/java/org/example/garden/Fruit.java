@@ -1,55 +1,76 @@
-
 package org.example.garden;
+
 import javafx.scene.paint.Color;
 
 public class Fruit extends Plant {
-	
-	private boolean  isRipen =false;
-	private double size;
-	
 
-	/**
-	 * @return the isRipen
-	 */
+	private boolean isRipen = false;
+	private double size;
+
+	// Constructor to initialize the Fruit object
+	public Fruit(String name, int age, Color color, int growthRate, Health health, boolean isRipen, double size) {
+		super(PlantType.FRUIT,name, age, color, growthRate, health);
+		this.isRipen = isRipen;
+		this.size = size;
+	}
+
+	// Getter for isRipen
 	public boolean isRipen() {
 		return isRipen;
 	}
 
-	/**
-	 * @return the size
-	 */
+	// Getter for size
 	public double getSize() {
 		return size;
 	}
 
-	/**
-	 * @param isRipen the isRipen to set
-	 */
+	// Setter for isRipen
 	public void setRipen(boolean isRipen) {
 		this.isRipen = isRipen;
 	}
 
-	/**
-	 * @param size the size to set
-	 */
+	// Setter for size with validation
 	public void setSize(double size) {
+		if (size <= 0) {
+			throw new IllegalArgumentException("Size must be greater than zero");
+		}
 		this.size = size;
 	}
-	
 
-	public void ripe()
-	{
-		setRipen(true);
-		this.setGrowthRate(0);
+	// Method to simulate the fruit ripening process
+	public void ripe() {
+		if (!this.isRipen) {
+			setRipen(true);
+			this.setGrowthRate(0);  // No further growth once ripe
+			System.out.println("The fruit has ripened.");
+		} else {
+			System.out.println("The fruit is already ripened.");
+		}
 	}
 
-	public Fruit(String type, int age, Color color, int growthRate, Health health, boolean isRipen, double size) {
-		super(type, age, color, growthRate, health);
-		this.isRipen = isRipen;
-		this.size = size;
+	// Override the grow() method to implement behavior for fruit growth
+	@Override
+	public void grow() {
+		if (!isRipen()) {
+			// Simulate growth of fruit size
+			this.size += 0.5; // For example, the fruit grows by 0.5 units each time it grows
+			System.out.println("The fruit is growing. Current size: " + this.size);
+		} else {
+			System.out.println("The fruit cannot grow because it is ripened.");
+		}
 	}
-	
-	
-	
 
+	// Override the toString() method for better representation of the Fruit object
+	@Override
+	public String toString() {
+		return "Fruit{" +
+				"type='" + getType() + '\'' +
+				", age=" + getAge() +
+				", color=" + getColor() +
+				", growthRate=" + getGrowthRate() +
+				", health=" + getHealth() +
+				", isRipen=" + isRipen +
+				", size=" + size +
+				'}';
+	}
 }

@@ -80,16 +80,16 @@ public class Garden {
 
 		} else {
 
-			if (RunGarden.vegetables.contains(type)) {
-				land[row][col] = new Vegetable(type, 0,Color.GREEN, 1, Health.Good, false);
-			} else if (RunGarden.fruits.contains(type)) {
-				land[row][col] = new Fruit(type, 0, Color.GREEN, 1, Health.Good, false, 0);
+			if (GardenDatabase.getVegetables().contains(type)) {
+				land[row][col] = new Vegetable(type, 0,Color.GREEN, 1, Health.GOOD, false);
+			} else if (GardenDatabase.getFruits().contains(type)) {
+				land[row][col] = new Fruit(type, 0, Color.GREEN, 1, Health.GOOD, false, 0);
 
-			} else if (RunGarden.flowers.contains(type)) {
-				land[row][col] = new Flower(type, 0,Color.ORANGE, 1, Health.Good, "0", false);
+			} else if (GardenDatabase.getFlowers().contains(type)) {
+				land[row][col] = new Flower(type, 0,Color.ORANGE, 1, Health.GOOD, "0", false);
 
-			} else if (RunGarden.trees.contains(type)) {
-				land[row][col] = new Tree(type, 0, Color.BLACK, 1, Health.Good, 0, true, false);
+			} else if (GardenDatabase.getTrees().contains(type)) {
+				land[row][col] = new Tree(type, 0, Color.BLACK, 1, Health.GOOD, 0, true, false);
 			}
 			 // Set the type of the newly planted plant
 
@@ -110,7 +110,7 @@ public class Garden {
 			for (int j = 0; j < cols; j++) {
 				if (land[i][j] != null) {
 
-					char plantChar = land[i][j].getType().charAt(0);//Get the first character of the plant type
+					char plantChar = land[i][j].getType().toString().charAt(0);//Get the first character of the plant type
 					int growthRate = land[i][j].getGrowthRate();// Get the growth rate of the plant
 					// Get the class name of the plant as name class is com.gradescope.garden.classname
 					String className = land[i][j].getClass().getName().split("\\.")[3]; 
@@ -159,14 +159,13 @@ public class Garden {
 	public void growByType(int num, String type) {
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				if (land[i][j] != null && land[i][j].getType().equalsIgnoreCase(type)) {
+				if (land[i][j] != null && land[i][j].getType() == Plant.PlantType.getName(type)) {
 					land[i][j].setGrowthRate(land[i][j].getGrowthRate() + num);
 
 				}
 			}
 		}
 	}
-
 
     // GROW [num] [plantClass] - Grow all plants of a specific class (flower, vegetable, tree)
     /**
@@ -189,10 +188,8 @@ public class Garden {
      * @param typeOrClass The type or class of plants to remove.
      */
 	public void remove(String typeOrClass) {
-
-		Functions.removeFunction(typeOrClass, rows, cols, land);
+		Plant.removePlant(typeOrClass, rows, cols, land);
 	}
-
 
     /**
      * Removes a plant at a specific location based on the action verb.

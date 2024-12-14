@@ -49,7 +49,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.garden.Garden;
-import org.example.garden.RunGarden;
+import org.example.garden.GardenDatabase;
 
 import java.io.*;
 import java.util.*;
@@ -83,7 +83,7 @@ public class App extends Application {
      */
     public static void main(String[] args) throws FileNotFoundException {
         // Load predefined plant types from external configuration
-        RunGarden.addTypes(RunGarden.fruits, RunGarden.vegetables, RunGarden.trees, RunGarden.flowers);
+        GardenDatabase.addTypes();
 
         // Read the input file name from the console
         Scanner read = new Scanner(System.in);
