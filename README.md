@@ -14,6 +14,8 @@ This program simulates a virtual garden where users can perform various gardenin
 - **Garden Display**: Print the current state of the garden to visualize plant positions and statuses.
 
 ## Program Code Description
+## You can view the prototype of the program 
+https://drive.google.com/file/d/1u0Rw0HzOWSHD1Xejssub-3XUlhWXgKaE/view .
 
 ```java
 /**
@@ -51,6 +53,3 @@ This program simulates a virtual garden where users can perform various gardenin
  *
  * Author: Sherif Ashraf Ali
  */
-
-## You can view the prototype of the program 
-https://drive.google.com/file/d/1u0Rw0HzOWSHD1Xejssub-3XUlhWXgKaE/view .
